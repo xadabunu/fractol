@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/07/16 00:21:36 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/07/16 15:27:37 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,31 +24,37 @@ LDLIBS	=	-lft
 
 RM		=	rm -rf
 
-MLX		=	minilibx-linux/libmlx_Linux.a
+#MLX		=	minilibx-linux/libmlx_Linux.a
 
-MLX_DIR	=	-Lminilibx-linux
+MLX		=	minilibx_macos/libmlx.a
 
-#LIB_DIR	=	libft
+MLX_DIR	=	-Lminilibx_macos
 
-#LIBFT	=	${LIB_DIR}/libft.a
+LIB_DIR	=	minilibx_macos libft
+
+LDFLAGS	=	${addprefix -L, ${LIB_DIR}}
+
+LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
+
+LIBFT	=	${LIB_DIR}/libft.a
 
 all		:	${NAME}
 
 ${MLX}	:
-			${MAKE} -C minilibx-linux
+			${MAKE} -C minilibx_macos
 
-${NAME}	:	${OBJS} ${LIBFT} ${MLX}
-			${CC} -lm ${MLX_DIR} -lmlx ${OBJS} -o ${NAME}
+${LIBFT}:
+			${MAKE} -C libft
 
-#${LIBFT}:
-#			${MAKE} -C ${LIB_DIR}
+${NAME}	:	${OBJS} ${MLX} ${LIBFT}
+			${CC} ${LDFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
 clean	:
-#			${MAKE} clean -C ${LIB_DIR}
+			${MAKE} clean -C ${LIB_DIR}
 			${RM} ${OBJS}
 
 fclean	:	clean
-#			${RM} ${LIBFT}
+			${RM} ${LIBFT}
 			${RM} ${NAME}
 
 re		:	fclean all
