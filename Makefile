@@ -6,13 +6,15 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/07/16 15:27:37 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/07/18 18:33:07 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	fractol
 
-SRCS	=	main.c
+SRCS	=	main.c \
+			map.c \
+			check_command.c
 
 OBJS	=	${SRCS:.c=.o}
 
@@ -36,7 +38,7 @@ LDFLAGS	=	${addprefix -L, ${LIB_DIR}}
 
 LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
 
-LIBFT	=	${LIB_DIR}/libft.a
+LIBFT	=	libft/libft.a
 
 all		:	${NAME}
 
@@ -50,7 +52,7 @@ ${NAME}	:	${OBJS} ${MLX} ${LIBFT}
 			${CC} ${LDFLAGS} ${OBJS} ${LDLIBS} -o ${NAME}
 
 clean	:
-			${MAKE} clean -C ${LIB_DIR}
+			${MAKE} clean -C libft
 			${RM} ${OBJS}
 
 fclean	:	clean

@@ -6,68 +6,32 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:29:52 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/16 20:00:19 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:52:39 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	print_all(char *m, char *f1, char *f2)
-{
-	ft_putendl_fd(m, 1);
-	ft_putendl_fd(f1, 1);
-	ft_putendl_fd(f2, 1);
-	exit(1);
-}
-
-void	command_line_management(int argc, char **argv)
-{
-	const char	*m = "For Mandelbrot set use \"./fractol Mandelbrot\".";
-	const char	*f1 = "For Julia set use \"./fractol Julia <n>\" with <n>";
-	const char	*f2 = "representing ...";
-
-	if (argc > 1 && argc < 4)
-	{
-		if (ft_strncmp(argv[1], "Mandelbrot", 11) == 0)
-		{
-			if (argc == 2)
-				return ;
-			ft_putendl_fd((char *)m, 1);
-			exit(1);
-		}
-		if (ft_strncmp(argv[1], "Julia", 6) == 0)
-		{
-			if (argc == 3 && ft_atoi(argv[2]) != -1)
-				return ;
-			ft_putendl_fd((char *)f1, 1);
-			ft_putendl_fd((char *)f2, 1);
-			exit(1);
-		}
-		print_all((char *)m, (char *)f1, (char *)f2);
-	}
-	else
-		print_all((char *)m, (char *)f1, (char *)f2);
-}
-
-#include <stdio.h>
-
+void	command_line_management(int argc, char **argv, t_mlx *s);
+ 
 int	get_color(int loop, double a, double b)
 {
 	double	d;
 
-	printf("loop: %d\n", loop);	
 	d = log2(log2((a * a + b * b) / 2));
-	return ((int)sqrt(loop - d) % 16777216);
+	return ((int)sqrt(loop - d) % WHITE);
 }
 
 int	mandelbrot_loop(double x, double y)
 {
-	double	a;
-	double	squared_a;
-	double	b;
-	double	squared_b;
-	int	loop;
+	double			a;
+	double			squared_a;
+	double			b;
+	double			squared_b;
+	unsigned int	loop;
 
+	x = ft_map(x, WIDTH, -1.5, 1.5);
+	y = ft_map(y, HEIGHT, -1.5, 1.5);
 	a = x;
 	b = y;
 	loop = 0;
@@ -75,10 +39,9 @@ int	mandelbrot_loop(double x, double y)
 	{
 		squared_a = a * a - b * b;
 		squared_b = 2 * a * b;
-		b = squared_b + y;
 		a = squared_a + x;
-		printf("[%f]\n", fabs(squared_a + squared_b));
-		if (fabs(squared_a + squared_b) > 16)
+		b = squared_b + y;
+		if (fabs(squared_a * squared_a + squared_b * squared_b) > 16)
 			return (get_color(loop, a, b));
 		++loop;
 	}
@@ -89,13 +52,6 @@ int	show_key(int key, void *param)
 {
 	(void)param;
 	ft_putnbr_fd(key, 1);
-	return (0);
-}
-
-int show_mouse(int button, int x, int y, void *param)
-{
-	(void)param;
-	printf("button : %d | x : %d | y : %d\n", button, x, y);
 	return (0);
 }
 
@@ -117,22 +73,30 @@ void	mandelbrot(t_mlx *s)
 	}
 }
 
-// 53 -> ESC
+int	leave(t_mlx *s)
+{
+	mlx_destroy_window(s->mlx, s->win);
+	free(s->mlx);
+	exit(0);
+	return (0);
+}
+
+int	keyboard_manager(int key, t_mlx *s)
+{
+	if (key == ESCAPE_KEY)
+		leave(s);
+	return (0);
+}
 
 int	main(int argc, char *argv[])
 {
 	t_mlx	s;
-	(void)argc;
-	(void)argv;
-	//command_line_management(argc, argv);
+	command_line_management(argc, argv, &s);
 	s.mlx = mlx_init();
 	s.win = mlx_new_window(s.mlx, WIDTH, HEIGHT, "FRACT'OL");
 	mandelbrot(&s);
-	mlx_key_hook(s.win, show_key, (void *)0);
-	mlx_mouse_hook(s.win, show_mouse, (void *)0);
+	mlx_key_hook(s.win, keyboard_manager, &s);
+	mlx_hook(s.win, ON_DESTROY, 0, leave, &s);
 	mlx_loop(s.mlx);
-	//mlx_destroy_window(mlx.mlx_ptr, mlx.window_ptr);
-	//mlx_destroy_display(mlx);
-	free(s.mlx);
 	return (0);
 }
