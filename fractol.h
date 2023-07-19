@@ -6,22 +6,26 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/18 17:08:30 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/19 18:06:51 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <math.h>
-# include "minilibx_macos/mlx.h"
 # include <stdlib.h>
+# include <math.h>
 # include "libft/libft.h"
+# include "minilibx_macos/mlx.h"
 
 # define WIDTH 500
 # define HEIGHT 500
-# define WHITE 16777215
+# define ZOOM 2
+# define WHITE 0x00ffffff
+# define BLACK 0x00000000
 # define ESCAPE_KEY 53
+# define MAX_LOOP 300
+# define Q 12
 
 enum
 {
