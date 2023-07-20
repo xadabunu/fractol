@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:29:52 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/19 18:16:17 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/20 17:55:30 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,77 @@ int	mandelbrot_loop(double x, double y)
 	return (get_color(loop, a, b));
 }
 
+// void	ft_pixel_put(t_img *s_image, t_point *s_point)
+// {
+// 	char	*pixel;
+// 	int		i;
+
+// 	if (s_point->x < 0 || s_point->x >= WINDOW_WIDTH \
+// 		|| s_point->y < 0 || s_point->y >= WINDOW_HEIGHT)
+// 		return ;
+// 	i = s_image->bpp - 8;
+// 	pixel = s_image->addr \
+// 		+ (s_point->y * s_image->line_len + s_point->x * (s_image->bpp / 8));
+// 	while (i >= 0)
+// 	{
+// 		if (s_image->endian != 0)
+// 			*pixel++ = (s_point->colour >> i) & 0xFF;
+// 		else
+// 			*pixel++ = (s_point->colour >> (s_image->bpp - 8 - i)) & 0xFF;
+// 		i -= 8;
+// 	}
+// }
+
+static int	in_window(int x, int y)
+{
+	if (x < 0 || y < 0)
+		return (0);
+	if (x > WIDTH || y > HEIGHT)
+		return (0);
+	return (1);
+}
+
+void	color_pixel(t_img *img, int x, int y, int color)
+{
+	char	*pixel;
+	
+	if (in_window(x, y) == 0)
+		return ;
+	pixel = img->add + y * (img->size) + x * (img->bits) / 8;
+	*(unsigned int *)pixel = color;
+}
+
+void	create_image(t_mlx *s)
+{
+	s->img.img = mlx_new_image(s->mlx, WIDTH, HEIGHT);
+	s->img.add = mlx_get_data_addr(s->img.img, &s->img.bits, \
+				&s->img.size, &s->img.end);
+}
+
 void	mandelbrot(t_mlx *s)
 {
 	int	x;
 	int	y;
 
 	x = 0;
+	create_image(s);
 	while (x < WIDTH)
 	{
 		y = 0;
 		while (y < HEIGHT)
 		{
-			mlx_pixel_put(s->mlx, s->win, x, y, mandelbrot_loop(x, y));
+			color_pixel(&s->img, x, y, mandelbrot_loop(x, y));
+			//mlx_pixel_put(s->mlx, s->win, x, y, mandelbrot_loop(x, y));
 			++y;
 		}
 		++x;
 	}
+	mlx_put_image_to_window(s->mlx, s->win, s->img.img, 0, 0);
 }
 
 int	leave(t_mlx *s)
 {
+	mlx_destroy_image(s->mlx, s->img.img);
 	mlx_destroy_window(s->mlx, s->win);
 	free(s->mlx);
 	exit(0);
