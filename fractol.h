@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/20 17:54:36 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:46:18 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "libft/libft.h"
 # include "minilibx_macos/mlx.h"
 
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 2000
+# define HEIGHT 2000
 # define ZOOM 1.5
 # define MAX_LOOP 300
 
@@ -53,15 +53,16 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	int		(*fun)();
+	int		(*fun)(struct s_mlx *);
+	float	j[2];
 	t_img	img;
 }	t_mlx;
 
-typedef struct s_inum
+typedef struct s_julia
 {
-	int	a;
-	int	b;
-}		t_inum;
+	int	x;
+	int	y;
+}	t_julia;
 
 double	ft_map(double val, double max, double new_min, double new_max);
 

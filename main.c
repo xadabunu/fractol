@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:29:52 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/20 17:55:30 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:39:07 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,6 @@ int	mandelbrot_loop(double x, double y)
 	return (get_color(loop, a, b));
 }
 
-// void	ft_pixel_put(t_img *s_image, t_point *s_point)
-// {
-// 	char	*pixel;
-// 	int		i;
-
-// 	if (s_point->x < 0 || s_point->x >= WINDOW_WIDTH \
-// 		|| s_point->y < 0 || s_point->y >= WINDOW_HEIGHT)
-// 		return ;
-// 	i = s_image->bpp - 8;
-// 	pixel = s_image->addr \
-// 		+ (s_point->y * s_image->line_len + s_point->x * (s_image->bpp / 8));
-// 	while (i >= 0)
-// 	{
-// 		if (s_image->endian != 0)
-// 			*pixel++ = (s_point->colour >> i) & 0xFF;
-// 		else
-// 			*pixel++ = (s_point->colour >> (s_image->bpp - 8 - i)) & 0xFF;
-// 		i -= 8;
-// 	}
-// }
-
 static int	in_window(int x, int y)
 {
 	if (x < 0 || y < 0)
@@ -99,7 +78,54 @@ void	create_image(t_mlx *s)
 				&s->img.size, &s->img.end);
 }
 
-void	mandelbrot(t_mlx *s)
+int	julia_loop(int x, int y, t_mlx *s)
+{
+	double			a;
+	double			squared_a;
+	double			b;
+	double			squared_b;
+	unsigned int	loop;
+
+	x = ft_map(x, WIDTH, -ZOOM, ZOOM);
+	y = ft_map(y, HEIGHT, -ZOOM, ZOOM);
+	a = s->j[0];
+	b = s->j[1];
+	loop = 0;
+	while (loop < MAX_LOOP)
+	{
+		squared_a = a * a - b * b;
+		squared_b = 2 * a * b;
+		a = squared_a + s->j[0];
+		b = squared_b + s->j[1];
+		if (fabs(squared_a * squared_a + squared_b * squared_b) > 16)
+			return (get_color(loop, a, b));
+		++loop;
+	}
+	return (get_color(loop, a, b));
+}
+
+int	julia(t_mlx *s)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	create_image(s);
+	while (x < WIDTH)
+	{
+		y = 0;
+		while (y < HEIGHT)
+		{
+			color_pixel(&s->img, x, y, julia_loop(x, y, s));
+			++y;
+		}
+		++x;
+	}
+	mlx_put_image_to_window(s->mlx, s->win, s->img.img, 0, 0);
+	return (0);
+}
+
+int	mandelbrot(t_mlx *s)
 {
 	int	x;
 	int	y;
@@ -112,12 +138,12 @@ void	mandelbrot(t_mlx *s)
 		while (y < HEIGHT)
 		{
 			color_pixel(&s->img, x, y, mandelbrot_loop(x, y));
-			//mlx_pixel_put(s->mlx, s->win, x, y, mandelbrot_loop(x, y));
 			++y;
 		}
 		++x;
 	}
 	mlx_put_image_to_window(s->mlx, s->win, s->img.img, 0, 0);
+	return (0);
 }
 
 int	leave(t_mlx *s)
