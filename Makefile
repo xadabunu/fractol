@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/07/18 18:33:07 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/07/22 00:43:48 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,24 +26,21 @@ LDLIBS	=	-lft
 
 RM		=	rm -rf
 
-#MLX		=	minilibx-linux/libmlx_Linux.a
+MLX		=	minilibx/libmlx.a
 
-MLX		=	minilibx_macos/libmlx.a
-
-MLX_DIR	=	-Lminilibx_macos
-
-LIB_DIR	=	minilibx_macos libft
+LIB_DIR	=	minilibx libft
 
 LDFLAGS	=	${addprefix -L, ${LIB_DIR}}
 
-LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
+#LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
+LDLIBS	=	-lm -lft -lmlx -lXext -lX11
 
 LIBFT	=	libft/libft.a
 
 all		:	${NAME}
 
 ${MLX}	:
-			${MAKE} -C minilibx_macos
+			${MAKE} -C minilibx
 
 ${LIBFT}:
 			${MAKE} -C libft
