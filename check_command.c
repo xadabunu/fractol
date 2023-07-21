@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:56:59 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/20 18:40:19 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/21 19:10:40 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ static void	set_params(t_mlx *s, float x, float y)
 static int	get_params(char *set, t_mlx *s)
 {
 	if (ft_strncmp(set, "1", 2) == 0)
-		set_params(s, 0.3, 0.5);
+		set_params(s, 0.3, -0.5);
 	else if (ft_strncmp(set, "2", 2) == 0)
-		set_params(s, 0.285, 0.01);
+		set_params(s, 0.285, -0.01);
 	else if (ft_strncmp(set, "3", 2) == 0)
-		set_params(s, -0.038088, 0.9754633);
+		set_params(s, -0.038088, -0.9754633);
 	else if (ft_strncmp(set, "4", 2) == 0)
-		set_params(s, -1.417022285618, 0.0099534);
+		set_params(s, -1.417022285618, -0.0099534);
 	else if (ft_strncmp(set, "5", 2) == 0)
 		set_params(s, -1.476, 0);
 	else if (ft_strncmp(set, "6", 2) == 0)
-		set_params(s, -0.4, 0.6);
+		set_params(s, -0.4, -0.6);
 	else if (ft_strncmp(set, "7", 2) == 0)
-		set_params(s, -0.8, 0.156);
+		set_params(s, -0.8, -0.156);
 	else
 		return (1);
 	return (0);
@@ -54,9 +54,9 @@ void	command_line_management(int argc, char **argv, t_mlx *s)
 {
 	const char	*m = "For Mandelbrot set use \"./fractol Mandelbrot\".";
 	const char	*j1 = "For Julia set use \"./fractol Julia <n>\" with <n>";
-	const char	*j2 = "representing which Julia set to display (1-7)";
+	const char	*j2 = "representing which Julia set to display (1-7).";
 
-	if (argc == 1) return ;
+	if (argc == 1) return (set_mandelbrot(s));
 	if (argc > 1 && argc < 4)
 	{
 		if (ft_strncmp(argv[1], "Mandelbrot", 11) == 0)

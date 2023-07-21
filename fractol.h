@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/20 18:46:18 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:50:23 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,26 @@
 
 # include <stdlib.h>
 # include <math.h>
-# include "libft/libft.h"
-# include "minilibx_macos/mlx.h"
+# include "libft/include/libft.h"
+# include "minilibx/mlx.h"
 
-# define WIDTH 2000
-# define HEIGHT 2000
+# define WIDTH 500
+# define HEIGHT 500
 # define ZOOM 1.5
-# define MAX_LOOP 300
+# define MAX_LOOP 500
 
 # define WHITE 0x00ffffff
 # define BLACK 0x00000000
 
-# define ESCAPE_KEY 53
-# define Q 12
+/* for MacOS */
+
+// # define ESCAPE_KEY 53
+// # define Q 12
+
+/* for Linux */
+
+# define ESCAPE_KEY 65307
+# define Q 113
 
 enum
 {

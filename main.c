@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:29:52 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/20 18:39:07 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:46:50 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	get_color(int loop, double a, double b)
 {
 	double	d;
 	int color;
+	int r = loop % 256;
+	int g = (loop * (int)a) % 256;
+	int bl = (loop * (int)b) % 256;
+
+	if (r && !g && !bl) return (BLACK);
+	
+	return ((r << 16) + (g << 8) + bl) ;
 	
 	d = (loop / MAX_LOOP) * (a * a + b * b);
 	color = ft_map(fabs(d), 1, BLACK, WHITE);
@@ -34,7 +41,7 @@ int	mandelbrot_loop(double x, double y)
 	double			squared_b;
 	unsigned int	loop;
 
-	x = ft_map(x, WIDTH, -ZOOM, ZOOM);
+	x = ft_map(x, WIDTH, -2, 1);
 	y = ft_map(y, HEIGHT, -ZOOM, ZOOM);
 	a = x;
 	b = y;
@@ -45,7 +52,7 @@ int	mandelbrot_loop(double x, double y)
 		squared_b = 2 * a * b;
 		a = squared_a + x;
 		b = squared_b + y;
-		if (fabs(squared_a * squared_a + squared_b * squared_b) > 16)
+		if (fabs(squared_a * squared_a + squared_b * squared_b) > 8)
 			return (get_color(loop, a, b));
 		++loop;
 	}
@@ -86,10 +93,8 @@ int	julia_loop(int x, int y, t_mlx *s)
 	double			squared_b;
 	unsigned int	loop;
 
-	x = ft_map(x, WIDTH, -ZOOM, ZOOM);
-	y = ft_map(y, HEIGHT, -ZOOM, ZOOM);
-	a = s->j[0];
-	b = s->j[1];
+	a = ft_map(x, WIDTH, -ZOOM, ZOOM);
+	b = ft_map(y, HEIGHT, -ZOOM, ZOOM);
 	loop = 0;
 	while (loop < MAX_LOOP)
 	{
@@ -177,7 +182,7 @@ int	main(int argc, char *argv[])
 	command_line_management(argc, argv, &s);
 	s.mlx = mlx_init();
 	s.win = mlx_new_window(s.mlx, WIDTH, HEIGHT, "FRACT'OL");
-	mandelbrot(&s);
+	s.fun(&s);
 	mlx_mouse_hook(s.win, show_mouse, &s);
 	mlx_key_hook(s.win, keyboard_manager, &s);
 	mlx_hook(s.win, ON_DESTROY, 0, leave, &s);
