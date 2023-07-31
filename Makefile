@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/07/22 00:43:48 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/07/31 10:53:29 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	=	fractol
 
 SRCS	=	main.c \
 			map.c \
-			check_command.c
+			check_command.c \
+			fractals.c
 
 OBJS	=	${SRCS:.c=.o}
 

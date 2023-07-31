@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/22 00:50:23 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:59:19 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@
 # define WIDTH 500
 # define HEIGHT 500
 # define ZOOM 1.5
-# define MAX_LOOP 500
+# define MAX_LOOP 100
 
 # define WHITE 0x00ffffff
 # define BLACK 0x00000000
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 /* for MacOS */
 
@@ -61,6 +63,7 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*win;
 	int		(*fun)(struct s_mlx *);
+	float	zoom;
 	float	j[2];
 	t_img	img;
 }	t_mlx;
@@ -72,5 +75,9 @@ typedef struct s_julia
 }	t_julia;
 
 double	ft_map(double val, double max, double new_min, double new_max);
+void	create_image(t_mlx *s);
+void	color_pixel(t_img *img, int x, int y, int color);
+int	julia(t_mlx *s);
+int	mandelbrot(t_mlx *s);
 
 #endif

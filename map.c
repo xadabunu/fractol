@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:04:09 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/21 17:41:39 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:22:00 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ double	ft_map(double val, double max, double new_min, double new_max)
 
 void	set_mandelbrot(t_mlx *s)
 {
+	s->zoom = 1.0;
 	s->fun = mandelbrot;
 }
 
 void	set_julia(t_mlx *s)
 {
+	s->zoom = 1.0;
 	s->fun = julia;
 }
