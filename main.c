@@ -55,7 +55,29 @@ int	keyboard_manager(int key, t_mlx *s)
 {
 	if (key == ESCAPE_KEY || key == Q)
 		leave(s);
-	ft_putnbr_fd(key, 1);//line to remove
+	if (key == ARROW_LEFT)
+	{
+		s->x_start -= 0.05;
+		s->x_end -= 0.05;
+	}
+	if (key == ARROW_UP)
+	{
+		s->y_start -= 0.05;
+		s->y_end -= 0.05;
+	}
+	if (key == ARROW_RIGHT)
+	{
+		s->x_start += 0.05;
+		s->x_end += 0.05;
+	}
+	if (key == ARROW_DOWN)
+	{
+		s->y_start += 0.05;
+		s->y_end += 0.05;
+	}
+	mlx_destroy_image(s->mlx, s->img.img);
+	s->fun(s);
+	//ft_putnbr_fd(key, 1);//line to remove
 	return (0);
 }
 

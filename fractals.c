@@ -29,8 +29,8 @@ static int	julia_loop(int x, int y, t_mlx *s)
 	double			squared_b;
 	unsigned int	loop;
 
-	a = ft_map(x, WIDTH, -ZOOM * s->zoom, ZOOM * s->zoom);
-	b = ft_map(y, HEIGHT, -ZOOM * s->zoom, ZOOM * s->zoom);
+	a = ft_map(x, WIDTH, s->x_start * s->zoom, s->x_end * s->zoom);
+	b = ft_map(y, HEIGHT, s->y_start * s->zoom, s->y_end * s->zoom);
 	loop = 0;
 	while (loop < MAX_LOOP)
 	{
@@ -74,8 +74,8 @@ static int	mandelbrot_loop(double x, double y, t_mlx *s)
 	double			squared_b;
 	unsigned int	loop;
 
-	x = ft_map(x, WIDTH, -ZOOM * s->zoom, ZOOM * s->zoom);
-	y = ft_map(y, HEIGHT, -ZOOM * s->zoom, ZOOM * s->zoom);
+	x = ft_map(x, WIDTH, s->x_start * s->zoom, s->x_end * s->zoom);
+	y = ft_map(y, HEIGHT, s->y_start * s->zoom, s->y_end * s->zoom);
 	a = x;
 	b = y;
 	loop = 0;

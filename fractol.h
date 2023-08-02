@@ -37,6 +37,10 @@
 
 # define ESCAPE_KEY 65307
 # define Q 113
+# define ARROW_LEFT 65361
+# define ARROW_UP 65362
+# define ARROW_RIGHT 65363
+# define ARROW_DOWN 65364
 
 enum
 {
@@ -48,6 +52,13 @@ enum
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
+
+typedef struct s_range
+{
+	float	start;
+	float	end;
+}	t_range;
+
 
 typedef struct s_img
 {
@@ -64,6 +75,8 @@ typedef struct s_mlx
 	void	*win;
 	int		(*fun)(struct s_mlx *);
 	float	zoom;
+	t_range	x;
+	t_range	y;
 	float	j[2];
 	t_img	img;
 }	t_mlx;

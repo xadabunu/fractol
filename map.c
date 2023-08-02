@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
 
 int	mandelbrot(t_mlx *s);
 int	julia(t_mlx *s);
@@ -30,11 +29,19 @@ double	ft_map(double val, double max, double new_min, double new_max)
 void	set_mandelbrot(t_mlx *s)
 {
 	s->zoom = 1.0;
+	s->x.start = -2.0;
+	s->x.end = 1.0;
+	s->y.start = -1.5;
+	s->y.end = 1.5;
 	s->fun = mandelbrot;
 }
 
 void	set_julia(t_mlx *s)
 {
 	s->zoom = 1.0;
+	s->x.start = -1.5;
+	s->x.end = 1.5;
+	s->y.start = -1.5;
+	s->y.end = 1.5;
 	s->fun = julia;
 }
