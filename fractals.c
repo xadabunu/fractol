@@ -1,25 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractals.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 15:12:02 by xadabunu          #+#    #+#             */
+/*   Updated: 2023/08/09 18:29:20 by xadabunu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
-
-static int	get_color(int loop, double a, double b)
-{
-	double	d;
-	int color;
-
-	(void)a;
-	(void)b;
-	
-	int r = (int)(loop * sinf(loop)) % 256;
-	int g = (loop * loop) % 256;
-	int bl = (loop) % 256;
-
-	if (r && !g && !bl) return (BLACK);
-	
-	return ((r << 16) + (g << 8) + bl) ;
-	
-	d = (loop / MAX_LOOP) * (a * a + b * b);
-	color = ft_map(fabs(d), 1, BLACK, WHITE);
-	return (color);
-}
 
 static int	julia_loop(int x, int y, t_mlx *s)
 {
@@ -29,8 +20,8 @@ static int	julia_loop(int x, int y, t_mlx *s)
 	double			squared_b;
 	unsigned int	loop;
 
-	a = ft_map(x, WIDTH, s->x_start * s->zoom, s->x_end * s->zoom);
-	b = ft_map(y, HEIGHT, s->y_start * s->zoom, s->y_end * s->zoom);
+	a = ft_map(x, WIDTH, s->x.start * s->zoom, s->x.end * s->zoom);
+	b = ft_map(y, HEIGHT, s->y.start * s->zoom, s->y.end * s->zoom);
 	loop = 0;
 	while (loop < MAX_LOOP)
 	{
@@ -38,11 +29,11 @@ static int	julia_loop(int x, int y, t_mlx *s)
 		squared_b = 2 * a * b;
 		a = squared_a + s->j[0];
 		b = squared_b + s->j[1];
-		if (squared_a * squared_a + squared_b * squared_b > 16)
-			return (get_color(loop, a, b));
+		if (squared_a * squared_a + squared_b * squared_b > LIMIT_VALUE)
+			return (s->get_color(loop));
 		++loop;
 	}
-	return (get_color(loop, a, b));
+	return (BLACK);
 }
 
 int	julia(t_mlx *s)
@@ -74,8 +65,8 @@ static int	mandelbrot_loop(double x, double y, t_mlx *s)
 	double			squared_b;
 	unsigned int	loop;
 
-	x = ft_map(x, WIDTH, s->x_start * s->zoom, s->x_end * s->zoom);
-	y = ft_map(y, HEIGHT, s->y_start * s->zoom, s->y_end * s->zoom);
+	x = ft_map(x, WIDTH, s->x.start * s->zoom, s->x.end * s->zoom);
+	y = ft_map(y, HEIGHT, s->y.start * s->zoom, s->y.end * s->zoom);
 	a = x;
 	b = y;
 	loop = 0;
@@ -85,11 +76,11 @@ static int	mandelbrot_loop(double x, double y, t_mlx *s)
 		squared_b = 2 * a * b;
 		a = squared_a + x;
 		b = squared_b + y;
-		if (fabs(squared_a * squared_a + squared_b * squared_b) > 8)
-			return (get_color(loop, a, b));
+		if (fabs(squared_a * squared_a + squared_b * squared_b) > LIMIT_VALUE)
+			return (s->get_color(loop));
 		++loop;
 	}
-	return (get_color(loop, a, b));
+	return (BLACK);
 }
 
 int	mandelbrot(t_mlx *s)

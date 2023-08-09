@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:29:52 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/31 12:00:04 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:37:52 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,59 @@ void	command_line_management(int argc, char **argv, t_mlx *s);
 
 #include <stdio.h>
 
-static int	in_window(int x, int y)
+void	refresh_image(t_mlx *s)
 {
-	if (x < 0 || y < 0)
-		return (0);
-	if (x > WIDTH || y > HEIGHT)
-		return (0);
-	return (1);
+	mlx_clear_window(s->mlx, s->win);
+	mlx_destroy_image(s->mlx, s->img.img);
+	s->fun(s);
 }
 
 void	color_pixel(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 	
-	if (in_window(x, y) == 0)
-		return ;
-	pixel = img->add + y * (img->size) + x * (img->bits) / 8;
+	pixel = img->add + y * (img->line_size) + x * (img->bpp) / 8;
 	*(unsigned int *)pixel = color;
 }
 
 void	create_image(t_mlx *s)
 {
 	s->img.img = mlx_new_image(s->mlx, WIDTH, HEIGHT);
-	s->img.add = mlx_get_data_addr(s->img.img, &s->img.bits, \
-				&s->img.size, &s->img.end);
+	s->img.add = mlx_get_data_addr(s->img.img, &s->img.bpp, \
+				&s->img.line_size, &s->img.end);
 }
+
+
+
+int get_loop(int x, int y, t_mlx *s) {
+	
+	double			a;
+	double			squared_a;
+	double			b;
+	double			squared_b;
+	unsigned int	loop;
+
+	x = ft_map(x, WIDTH, s->x.start * s->zoom, s->x.end * s->zoom);
+	y = ft_map(y, HEIGHT, s->y.start * s->zoom, s->y.end * s->zoom);
+	a = x;
+	b = y;
+	loop = 0;
+	while (loop < MAX_LOOP)
+	{
+		squared_a = a * a - b * b;
+		squared_b = 2 * a * b;
+		a = squared_a + x;
+		b = squared_b + y;
+		if (fabs(squared_a * squared_a + squared_b * squared_b) > LIMIT_VALUE)
+			return (loop);
+		++loop;
+	}
+	return (loop);
+
+	
+}
+
+
 
 int	leave(t_mlx *s)
 {
@@ -51,33 +79,60 @@ int	leave(t_mlx *s)
 	return (0);
 }
 
+void	arrow_manager(int key, t_mlx *s)
+{
+	if (key == ARROW_LEFT)
+	{
+		s->x.start -= 0.05;
+		s->x.end -= 0.05;
+		refresh_image(s);
+	}
+	else if (key == ARROW_UP)
+	{
+		s->y.start -= 0.05;
+		s->y.end -= 0.05;
+		refresh_image(s);
+	}
+	else if (key == ARROW_RIGHT)
+	{
+		s->x.start += 0.05;
+		s->x.end += 0.05;
+		refresh_image(s);
+	}
+	else if (key == ARROW_DOWN)
+	{
+		s->y.start += 0.05;
+		s->y.end += 0.05;
+		refresh_image(s);
+	}
+}
+
+void	color_manager(int key, t_mlx *s)
+{
+	if (key == R)
+	{
+		s->get_color = get_red;
+		refresh_image(s);
+	}
+	else if (key == G)
+	{
+		s->get_color = get_green;
+		refresh_image(s);
+	}
+	else if (key == B)
+	{
+		s->get_color = get_blue;
+		refresh_image(s);
+	}
+}
+
 int	keyboard_manager(int key, t_mlx *s)
 {
 	if (key == ESCAPE_KEY || key == Q)
 		leave(s);
-	if (key == ARROW_LEFT)
-	{
-		s->x_start -= 0.05;
-		s->x_end -= 0.05;
-	}
-	if (key == ARROW_UP)
-	{
-		s->y_start -= 0.05;
-		s->y_end -= 0.05;
-	}
-	if (key == ARROW_RIGHT)
-	{
-		s->x_start += 0.05;
-		s->x_end += 0.05;
-	}
-	if (key == ARROW_DOWN)
-	{
-		s->y_start += 0.05;
-		s->y_end += 0.05;
-	}
-	mlx_destroy_image(s->mlx, s->img.img);
-	s->fun(s);
-	//ft_putnbr_fd(key, 1);//line to remove
+	arrow_manager(key, s);
+	color_manager(key, s);
+	//printf("key : %d\n", key);//line to remove
 	return (0);
 }
 
@@ -85,15 +140,17 @@ int	mouse_manager(int button, int x, int y, t_mlx *s)
 {
 	if (button == SCROLL_UP)
 	{
-		s->zoom /= 1.1;
-		mlx_destroy_image(s->mlx, s->img.img);
-		s->fun(s);
+		s->zoom *= 0.9;
+		refresh_image(s);
 	}
 	else if (button == SCROLL_DOWN)
 	{
 		s->zoom *= 1.1;
-		mlx_destroy_image(s->mlx, s->img.img);
-		s->fun(s);
+		refresh_image(s);
+	}
+	else if (button == 1)
+	{
+		printf("loop : %d\n", get_loop(x, y, s));
 	}
 	else
 		printf("x : %d | y : %d | button: %d\n", x, y, button);
@@ -103,6 +160,7 @@ int	mouse_manager(int button, int x, int y, t_mlx *s)
 int	main(int argc, char *argv[])
 {
 	t_mlx	s;
+
 	command_line_management(argc, argv, &s);
 	s.mlx = mlx_init();
 	s.win = mlx_new_window(s.mlx, WIDTH, HEIGHT, "FRACT'OL");

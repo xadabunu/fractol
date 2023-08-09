@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/07/31 10:53:29 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/08/09 17:21:37 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,12 @@ NAME	=	fractol
 SRCS	=	main.c \
 			map.c \
 			check_command.c \
-			fractals.c
+			fractals.c \
+			get_colors.c
 
 OBJS	=	${SRCS:.c=.o}
 
 CFLAGS	=	-Wall -Wextra -Werror
-
-LDFLAGS	=	-Llibft
-
-LDLIBS	=	-lft
 
 RM		=	rm -rf
 
@@ -33,8 +30,8 @@ LIB_DIR	=	minilibx libft
 
 LDFLAGS	=	${addprefix -L, ${LIB_DIR}}
 
-#LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
-LDLIBS	=	-lm -lft -lmlx -lXext -lX11
+LDLIBS	=	-lm -lmlx -lft -framework OpenGL -framework Appkit
+#LDLIBS	=	-lm -lft -lmlx -lXext -lX11
 
 LIBFT	=	libft/libft.a
 
@@ -54,6 +51,7 @@ clean	:
 			${RM} ${OBJS}
 
 fclean	:	clean
+			${RM} ${MLX}
 			${RM} ${LIBFT}
 			${RM} ${NAME}
 

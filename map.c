@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:04:09 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/31 10:22:00 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:23:32 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	set_mandelbrot(t_mlx *s)
 	s->y.start = -1.5;
 	s->y.end = 1.5;
 	s->fun = mandelbrot;
+	s->get_color = get_green;
 }
 
 void	set_julia(t_mlx *s)
@@ -44,4 +45,5 @@ void	set_julia(t_mlx *s)
 	s->y.start = -1.5;
 	s->y.end = 1.5;
 	s->fun = julia;
+	s->get_color = get_green;
 }

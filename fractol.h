@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/31 11:59:19 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:24:28 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define HEIGHT 500
 # define ZOOM 1.5
 # define MAX_LOOP 100
+# define LIMIT_VALUE 16
 
 # define WHITE 0x00ffffff
 # define BLACK 0x00000000
@@ -30,17 +31,25 @@
 
 /* for MacOS */
 
-// # define ESCAPE_KEY 53
-// # define Q 12
+# define ESCAPE_KEY 53
+# define Q 12
+# define ARROW_LEFT 123
+# define ARROW_UP 126
+# define ARROW_RIGHT 124
+# define ARROW_DOWN 125
+# define R 15
+# define G 5
+# define B 11
 
 /* for Linux */
-
+/*
 # define ESCAPE_KEY 65307
 # define Q 113
 # define ARROW_LEFT 65361
 # define ARROW_UP 65362
 # define ARROW_RIGHT 65363
 # define ARROW_DOWN 65364
+*/
 
 enum
 {
@@ -64,8 +73,8 @@ typedef struct s_img
 {
 	void	*img;
 	char	*add;
-	int		bits;
-	int		size;
+	int		bpp;
+	int		line_size;
 	int		end;
 }	t_img;
 
@@ -74,6 +83,7 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*win;
 	int		(*fun)(struct s_mlx *);
+	int		(*get_color)(int);
 	float	zoom;
 	t_range	x;
 	t_range	y;
@@ -92,5 +102,8 @@ void	create_image(t_mlx *s);
 void	color_pixel(t_img *img, int x, int y, int color);
 int	julia(t_mlx *s);
 int	mandelbrot(t_mlx *s);
+int	get_green(int loop);
+int	get_red(int loop);
+int	get_blue(int loop);
 
 #endif
