@@ -6,14 +6,11 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:04:09 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/09 16:23:32 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:16:45 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-int	mandelbrot(t_mlx *s);
-int	julia(t_mlx *s);
 
 double	ft_map(double val, double max, double new_min, double new_max)
 {

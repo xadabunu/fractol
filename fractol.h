@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/10 13:28:24 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:13:00 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,24 @@ typedef struct s_julia
 }	t_julia;
 
 double	ft_map(double val, double max, double new_min, double new_max);
+
 void	create_image(t_mlx *s);
 void	color_pixel(t_img *img, int x, int y, int color);
+
 int		julia(t_mlx *s);
 int		mandelbrot(t_mlx *s);
+
 int		get_green(int loop);
 int		get_red(int loop);
 int		get_blue(int loop);
-void	arrow_manager(int key, t_mlx *s);
-void	color_manager(int key, t_mlx *s);
+
 int		keyboard_manager(int key, t_mlx *s);
 int		mouse_manager(int button, int x, int y, t_mlx *s);
+
+void	refresh_image(t_mlx *s);
+void	color_pixel(t_img *img, int x, int y, int color);
+void	create_image(t_mlx *s);
+
+int		leave(t_mlx *s);
 
 #endif

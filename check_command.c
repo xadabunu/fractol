@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:56:59 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/10 13:23:38 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:05:14 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static int	get_params(char *set, t_mlx *s)
 static void	print_all(int m, int j)
 {
 	const char	*m_err = "For Mandelbrot set use \"./fractol Mandelbrot\".";
-	const char	*j1 = "For Julia set use \"./fractol Julia <n>\" with <n>";
+	const char	*j1 = "For Julia set use \"./fractol Julia <n>\" with <n> ";
 	const char	*j2 = "representing which Julia set to display (1-7).";
 
 	if (m == 1)
 		ft_putendl_fd(m_err, 1);
 	if (j == 1)
 	{
-		ft_putendl_fd(j1, 1);
+		ft_putstr_fd(j1, 1);
 		ft_putendl_fd(j2, 1);
 	}
 	exit(1);
