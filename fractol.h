@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/09 17:24:28 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:28:24 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define WIDTH 500
 # define HEIGHT 500
 # define ZOOM 1.5
-# define MAX_LOOP 100
+# define MAX_LOOP 300
 # define LIMIT_VALUE 16
 
 # define WHITE 0x00ffffff
@@ -68,7 +68,6 @@ typedef struct s_range
 	float	end;
 }	t_range;
 
-
 typedef struct s_img
 {
 	void	*img;
@@ -100,10 +99,14 @@ typedef struct s_julia
 double	ft_map(double val, double max, double new_min, double new_max);
 void	create_image(t_mlx *s);
 void	color_pixel(t_img *img, int x, int y, int color);
-int	julia(t_mlx *s);
-int	mandelbrot(t_mlx *s);
-int	get_green(int loop);
-int	get_red(int loop);
-int	get_blue(int loop);
+int		julia(t_mlx *s);
+int		mandelbrot(t_mlx *s);
+int		get_green(int loop);
+int		get_red(int loop);
+int		get_blue(int loop);
+void	arrow_manager(int key, t_mlx *s);
+void	color_manager(int key, t_mlx *s);
+int		keyboard_manager(int key, t_mlx *s);
+int		mouse_manager(int button, int x, int y, t_mlx *s);
 
 #endif

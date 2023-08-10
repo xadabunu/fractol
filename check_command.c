@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:56:59 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/21 19:10:40 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:23:38 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,40 @@ static int	get_params(char *set, t_mlx *s)
 	return (0);
 }
 
-static void	print_all(char *m, char *j1, char *j2)
+static void	print_all(int m, int j)
 {
-	ft_putendl_fd(m, 1);
-	ft_putendl_fd(j1, 1);
-	ft_putendl_fd(j2, 1);
+	const char	*m_err = "For Mandelbrot set use \"./fractol Mandelbrot\".";
+	const char	*j1 = "For Julia set use \"./fractol Julia <n>\" with <n>";
+	const char	*j2 = "representing which Julia set to display (1-7).";
+
+	if (m == 1)
+		ft_putendl_fd(m_err, 1);
+	if (j == 1)
+	{
+		ft_putendl_fd(j1, 1);
+		ft_putendl_fd(j2, 1);
+	}
 	exit(1);
 }
 
 void	command_line_management(int argc, char **argv, t_mlx *s)
 {
-	const char	*m = "For Mandelbrot set use \"./fractol Mandelbrot\".";
-	const char	*j1 = "For Julia set use \"./fractol Julia <n>\" with <n>";
-	const char	*j2 = "representing which Julia set to display (1-7).";
-
-	if (argc == 1) return (set_mandelbrot(s));
 	if (argc > 1 && argc < 4)
 	{
 		if (ft_strncmp(argv[1], "Mandelbrot", 11) == 0)
 		{
 			if (argc == 2)
 				return (set_mandelbrot(s));
-			ft_putendl_fd((char *)m, 1);
-			exit(1);
+			print_all(1, 0);
 		}
 		if (ft_strncmp(argv[1], "Julia", 6) == 0)
 		{
 			if (argc == 3 && get_params(argv[2], s) != 1)
 				return (set_julia(s));
-			ft_putendl_fd((char *)j1, 1);
-			ft_putendl_fd((char *)j2, 1);
-			exit(1);
+			print_all(0, 1);
 		}
-		print_all((char *)m, (char *)j1, (char *)j2);
+		print_all(1, 1);
 	}
 	else
-		print_all((char *)m, (char *)j1, (char *)j2);
+		print_all(1, 1);
 }
