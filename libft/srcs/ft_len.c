@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 00:32:09 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/07/21 11:15:11 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:50:19 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	ft_strlen(const char *str)
 {
 	unsigned int	i;
-	
+
 	if (str == NULL)
 		return (0);
 	i = 0;

@@ -13,7 +13,7 @@
 #ifndef FT_LIST_H
 # define FT_LIST_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
 typedef struct s_list
 {

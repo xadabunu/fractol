@@ -28,7 +28,7 @@ int	ft_puthexa_fd(const size_t n, int fd);
 int	ft_puthexa_upper_fd(const unsigned int n, int fd);
 int	ft_putaddress_fd(const void *ptr, int fd);
 
-size_t	ft_strlen(const char *str);
-size_t	ft_nbrlen(const long n);
+unsigned long	ft_strlen(const char *str);
+unsigned long	ft_nbrlen(const long n);
 
 #endif
