@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/08/10 16:25:42 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/08/10 17:02:37 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ ${NAME}	:	${OBJS} ${MLX} ${LIBFT}
 
 clean	:
 			${MAKE} clean -C libft
+			${MAKE} clean -C minilibx
 			${RM} ${OBJS}
 
 fclean	:	clean
