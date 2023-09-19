@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/08/10 17:02:37 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/09/19 22:32:47 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS	=	main.c \
 			fractals.c \
 			get_colors.c \
 			hookers.c \
-			images.c
+			images.c \
+			setup.c
 
 OBJS	=	${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/10 16:13:00 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:31:35 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	int		(*fun)(struct s_mlx *);
+	int		(*loop)(double, double, struct s_mlx *);
 	int		(*get_color)(int);
 	float	zoom;
 	t_range	x;
@@ -98,11 +98,13 @@ typedef struct s_julia
 
 double	ft_map(double val, double max, double new_min, double new_max);
 
-void	create_image(t_mlx *s);
-void	color_pixel(t_img *img, int x, int y, int color);
+void	command_line_management(int argc, char **argv, t_mlx *s);
+void	set_mandelbrot(t_mlx *s);
+void	set_julia(t_mlx *s);
 
-int		julia(t_mlx *s);
-int		mandelbrot(t_mlx *s);
+int		show_fractal(t_mlx *s);
+int		julia_loop(double x, double y, t_mlx *s);
+int		mandelbrot_loop(double x, double y, t_mlx *s);
 
 int		get_green(int loop);
 int		get_red(int loop);
@@ -111,6 +113,8 @@ int		get_blue(int loop);
 int		keyboard_manager(int key, t_mlx *s);
 int		mouse_manager(int button, int x, int y, t_mlx *s);
 
+void	create_image(t_mlx *s);
+void	color_pixel(t_img *img, int x, int y, int color);
 void	refresh_image(t_mlx *s);
 void	color_pixel(t_img *img, int x, int y, int color);
 void	create_image(t_mlx *s);

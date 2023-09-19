@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:59:08 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/10 14:59:37 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:48:41 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	refresh_image(t_mlx *s)
 {
 	mlx_clear_window(s->mlx, s->win);
 	mlx_destroy_image(s->mlx, s->img.img);
-	s->fun(s);
+	show_fractal(s);
 }
 
 void	color_pixel(t_img *img, int x, int y, int color)

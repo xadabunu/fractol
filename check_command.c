@@ -6,14 +6,11 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:56:59 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/08/10 15:05:14 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/09/19 22:31:30 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-void	set_mandelbrot(t_mlx *s);
-void	set_julia(t_mlx *s);
 
 static void	set_params(t_mlx *s, float x, float y)
 {
