@@ -6,7 +6,7 @@
 /*   By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 00:42:47 by xadabunu          #+#    #+#             */
-/*   Updated: 2023/09/19 22:31:35 by xadabunu         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:47:54 by xadabunu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define WIDTH 500
 # define HEIGHT 500
 # define ZOOM 1.5
-# define MAX_LOOP 300
+# define MAX_LOOP 200
 # define LIMIT_VALUE 16
 
 # define WHITE 0x00ffffff

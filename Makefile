@@ -6,7 +6,7 @@
 #    By: xadabunu <xadabunu@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 00:30:17 by xadabunu          #+#    #+#              #
-#    Updated: 2023/09/19 22:32:47 by xadabunu         ###   ########.fr        #
+#    Updated: 2023/10/19 13:36:40 by xadabunu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,10 @@ SRCS	=	main.c \
 
 OBJS	=	${SRCS:.c=.o}
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror \
+			-finline-functions -fvectorize -fslp-vectorize -ffast-math \
+			-falign-functions -funroll-loops -fstrict-aliasing \
+			-fomit-frame-pointer -flto -Ofast -O1 -O2 -Os -O3
 
 RM		=	rm -rf
 
